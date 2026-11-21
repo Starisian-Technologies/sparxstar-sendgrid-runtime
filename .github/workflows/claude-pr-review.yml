@@ -4,8 +4,15 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
+permissions: {}
 jobs:
   review:
-    uses: Starisian-Technologies/sparxstar-anthropic-workflow/.github/workflows/claude-pr-review.yml@main
-    secrets:
-      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    name: Claude PR review
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - name: Report unsupported public review
+        run: |
+          echo "::notice::No AI review performed. The central reviewer supports private repositories and is migrating to private execution."
+          echo "### AI review not performed" >> "$GITHUB_STEP_SUMMARY"
+          echo "This public repository no longer calls the private reviewer. Use the native Codex integration where enabled; private consumers must install the central relay." >> "$GITHUB_STEP_SUMMARY"
